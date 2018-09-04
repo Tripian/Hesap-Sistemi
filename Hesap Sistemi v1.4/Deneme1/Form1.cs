@@ -23,28 +23,21 @@ namespace Deneme1
         }
 
         public int ID;
-        private void temizleme()
-        {
-            textisim.Text = "";
-            textsoyisim.Text = "";
-            cinsiyetBox.Text = "";
-            textbirikim1.Text = "";
-            textbirikim2.Text = "";
-            YasBox1.Text ="";
-            YasBox2.Text ="";
-            tarihPicker1.Text = DateTime.Today.ToShortDateString();
-            tarihPicker2.Text = DateTime.Today.ToShortDateString();
-        }
+        bool kontrol = false;
         private void btnkaydet_Click(object sender, EventArgs e)
         {
             
             Form2 f2 = new Form2();
-            ID = dataGridView1.Rows.Count - 1;
+            ID = dataGridView1.Rows.Count;
             f2.ShowDialog();
             listeleme();
-            dataGridView1.Rows[ID].Selected = true;
-            dataGridView1.CurrentCell = dataGridView1.Rows[ID].Cells[1];
-            dataGridView1.Focus();
+
+            if (ID != dataGridView1.Rows.Count)
+            {
+                dataGridView1.Rows[ID].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1.Rows[ID].Cells[1];
+                dataGridView1.Focus();
+            }
 
         }
 
@@ -68,8 +61,13 @@ namespace Deneme1
         private void Form1_Load(object sender, EventArgs e)
         {
             cinsiyetBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            cinsiyetBox.SelectedIndex= 0;
+            siralaBox1.SelectedIndex = 0;
             siralaBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            YasBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            YasBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
             listeleme();
             //MessageBox.Show(DateTime.Today.ToShortDateString());
             //MessageBox.Show(tarihPicker1.Text);
@@ -97,32 +95,25 @@ namespace Deneme1
 
         private void btnguncelle_Click(object sender, EventArgs e)
         {
-            Form3 f3 = new Form3();
-            f3.id = Convert.ToInt32(this.dataGridView1.CurrentRow.Cells[0].Value);
-            ID = dataGridView1.CurrentCell.RowIndex;
-            f3.textisim.Text = this.dataGridView1.CurrentRow.Cells[1].Value.ToString();
-            f3.textsoyisim.Text = this.dataGridView1.CurrentRow.Cells[2].Value.ToString();
-            f3.textbirikim.Text = this.dataGridView1.CurrentRow.Cells[3].Value.ToString();
-            f3.dateTimePicker1.Text = this.dataGridView1.CurrentRow.Cells[4].Value.ToString();
-            f3.textyas.Text = this.dataGridView1.CurrentRow.Cells[5].Value.ToString();
-            f3.cinsiyetBox.Text = this.dataGridView1.CurrentRow.Cells[6].Value.ToString();
-            f3.ShowDialog();
-            listeleme();
-            dataGridView1.Rows[ID].Selected = true;
-            dataGridView1.CurrentCell = dataGridView1.Rows[ID].Cells[1];
-            dataGridView1.Focus();
+            if (kontrol == true)
+            {
+                Form3 f3 = new Form3();
+                f3.id = Convert.ToInt32(this.dataGridView1.CurrentRow.Cells[0].Value);
+                ID = dataGridView1.CurrentCell.RowIndex;
+                f3.textisim.Text = this.dataGridView1.CurrentRow.Cells[1].Value.ToString();
+                f3.textsoyisim.Text = this.dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                f3.textbirikim.Text = this.dataGridView1.CurrentRow.Cells[3].Value.ToString();
+                f3.dateTimePicker1.Text = this.dataGridView1.CurrentRow.Cells[4].Value.ToString();
+                f3.textyas.Text = this.dataGridView1.CurrentRow.Cells[5].Value.ToString();
+                f3.cinsiyetBox.Text = this.dataGridView1.CurrentRow.Cells[6].Value.ToString();
+                f3.ShowDialog();
+                listeleme();
+                dataGridView1.Rows[ID].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1.Rows[ID].Cells[1];
+                dataGridView1.Focus();
+            }
         }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            /*textisim.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
-            textsoyisim.Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
-            textbirikim.Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
-            dogumTarihiPicker.Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
-            textyas.Text = dataGridView1.CurrentRow.Cells[5].Value.ToString();
-            cinsiyetBox.Text = dataGridView1.CurrentRow.Cells[6].Value.ToString();*/
-        }
-
+        
         string sorgu = "";
         private void button1_Click(object sender, EventArgs e)
         {
@@ -157,7 +148,7 @@ namespace Deneme1
                     cmd.CommandText = sorgu;
                 }
 
-                if (cinsiyet != "")
+                if (cinsiyet != "" && cinsiyet != "Tümü")
                 {
                     sorgu = sorgu + " and cinsiyet = '" + cinsiyet + "'";
                     cmd.CommandText = sorgu;
@@ -165,7 +156,7 @@ namespace Deneme1
 
                 if (cinsiyet != "" && cinsiyet == "Tümü")
                 {
-                    sorgu = sorgu + " or cinsiyet = 'erkek' or cinsiyet = 'kadın'";
+                    sorgu = sorgu + " and (cinsiyet = 'erkek' or cinsiyet = 'kadın')";
                     cmd.CommandText = sorgu;
                 }
 
@@ -232,12 +223,7 @@ namespace Deneme1
                 DataSet ds = new DataSet();
                 adaptr.Fill(ds, "tablo");
                 dataGridView1.DataSource = ds.Tables["tablo"];
-                dataGridView1.Columns[0].Visible = false;
-
                 
-
-                //temizleme();
-
                 baglanti.Close();
             }
         }
@@ -289,8 +275,8 @@ namespace Deneme1
             {
                 YasBox1.Visible = false;
                 YasBox2.Visible = false;
-                YasBox1.Text = "";
-                YasBox2.Text = "";
+                YasBox1.SelectedItem = null;
+                YasBox2.SelectedItem = null;
             }
         }
 
@@ -309,6 +295,39 @@ namespace Deneme1
                 dataGridView1.Columns[0].Visible = false;
                 baglanti.Close();
             }
+        }
+
+        private void textbirikim1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+            
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+
+        }
+
+        private void textbirikim2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            kontrol = true;
         }
     }
 }

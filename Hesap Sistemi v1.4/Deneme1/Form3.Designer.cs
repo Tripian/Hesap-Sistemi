@@ -79,6 +79,7 @@
             this.textyas.Name = "textyas";
             this.textyas.Size = new System.Drawing.Size(100, 22);
             this.textyas.TabIndex = 22;
+            this.textyas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textyas_KeyPress);
             // 
             // textbirikim
             // 
@@ -86,6 +87,7 @@
             this.textbirikim.Name = "textbirikim";
             this.textbirikim.Size = new System.Drawing.Size(100, 22);
             this.textbirikim.TabIndex = 21;
+            this.textbirikim.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textbirikim_KeyPress);
             // 
             // textsoyisim
             // 

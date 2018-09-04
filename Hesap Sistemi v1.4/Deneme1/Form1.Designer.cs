@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.siralaBox1 = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -52,8 +54,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.siralaBox1 = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.form3BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -93,6 +93,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bilgiler";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(615, 56);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(44, 17);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Sırala";
+            // 
+            // siralaBox1
+            // 
+            this.siralaBox1.FormattingEnabled = true;
+            this.siralaBox1.Items.AddRange(new object[] {
+            "Sıralama",
+            "İsme Göre",
+            "Soyisme Göre",
+            "Cinsiyete Göre",
+            "Birikime Göre",
+            "Doğum Tarihine Göre",
+            "Yaşa Göre"});
+            this.siralaBox1.Location = new System.Drawing.Point(680, 53);
+            this.siralaBox1.Name = "siralaBox1";
+            this.siralaBox1.Size = new System.Drawing.Size(121, 24);
+            this.siralaBox1.TabIndex = 25;
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(570, 125);
@@ -131,6 +156,7 @@
             this.textbirikim2.Name = "textbirikim2";
             this.textbirikim2.Size = new System.Drawing.Size(107, 22);
             this.textbirikim2.TabIndex = 21;
+            this.textbirikim2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textbirikim2_KeyPress);
             // 
             // tarihPicker2
             // 
@@ -543,6 +569,7 @@
             this.textbirikim1.Name = "textbirikim1";
             this.textbirikim1.Size = new System.Drawing.Size(107, 22);
             this.textbirikim1.TabIndex = 5;
+            this.textbirikim1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textbirikim1_KeyPress);
             // 
             // textsoyisim
             // 
@@ -609,31 +636,6 @@
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
-            // siralaBox1
-            // 
-            this.siralaBox1.FormattingEnabled = true;
-            this.siralaBox1.Items.AddRange(new object[] {
-            "Sıralama",
-            "İsme Göre",
-            "Soyisme Göre",
-            "Cinsiyete Göre",
-            "Birikime Göre",
-            "Doğum Tarihine Göre",
-            "Yaşa Göre"});
-            this.siralaBox1.Location = new System.Drawing.Point(680, 53);
-            this.siralaBox1.Name = "siralaBox1";
-            this.siralaBox1.Size = new System.Drawing.Size(121, 24);
-            this.siralaBox1.TabIndex = 25;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(615, 56);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 17);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Sırala";
             // 
             // form3BindingSource
             // 
